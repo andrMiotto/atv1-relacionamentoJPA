@@ -1,4 +1,10 @@
 package weg.senai.atv1.dto.departamento;
 
-public class DepartamentoRequest {
+public record DepartamentoRequest(
+
+        String nome,
+        long funcionarioId
+
+
+) {
 }
