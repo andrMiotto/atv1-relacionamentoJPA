@@ -60,10 +60,30 @@ public class DepartamentoService {
             return departamentoResponse;
         }
 
+    }
+
+    public DepartamentoResponse update(Long id, DepartamentoRequest departamentoRequest) {
+        Departamento departamento = departamentoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Não existe nenhum departamento com este id"));
+        departamento.setNome(departamentoRequest.nome());
+        Departamento departamentoSalvo = departamentoRepository.save(departamento);
+
+        DepartamentoResponse departamentoResponse = departamentoMapper.toDTO(departamentoSalvo);
+
+        return departamentoResponse;
 
     }
 
+    public void delete(Long id) {
 
+        if (departamentoRepository.existsById(id)) {
+            departamentoRepository.deleteById(id);
+
+        } else {
+            throw new RuntimeException("Este departamento não existe");
+        }
+
+    }
 
 
 }

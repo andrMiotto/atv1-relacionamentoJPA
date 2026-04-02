@@ -29,7 +29,7 @@ public class Funcionario {
     String cpf;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "departamento_id")
     private Departamento departamento;
 
     public Funcionario(String nome, int idade, String cpf) {
