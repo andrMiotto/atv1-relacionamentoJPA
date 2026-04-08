@@ -1,6 +1,8 @@
 package weg.senai.atv1.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import weg.senai.atv1.dto.departamento.DepartamentoRequest;
 import weg.senai.atv1.dto.departamento.DepartamentoResponse;
@@ -20,49 +22,57 @@ public class FuncionarioController {
 
 
     @PostMapping("/register")
-    public FuncionarioResponse create(@RequestBody FuncionarioRequest funcionarioRequest) {
-        return funcionarioService.create(funcionarioRequest);
+    public ResponseEntity<FuncionarioResponse> create(@RequestBody FuncionarioRequest funcionarioRequest) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.create(funcionarioRequest));
 
     }
 
     @GetMapping("/list")
-    public List<FuncionarioResponse> listAll() {
-        return funcionarioService.listAll();
+    public ResponseEntity<List<FuncionarioResponse>> listAll() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.listAll());
 
     }
 
 
     @GetMapping("/list/{id}")
-    public FuncionarioResponse listId(@PathVariable("id") Long id) {
-        return funcionarioService.findById(id);
+    public ResponseEntity<FuncionarioResponse> listId(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.findById(id));
 
     }
 
     @PutMapping("/update/{id}")
-    public FuncionarioResponse update(@PathVariable("id") long id, @RequestBody FuncionarioRequest funcionarioRequest) {
-        return funcionarioService.update(id, funcionarioRequest);
+    public ResponseEntity<FuncionarioResponse> update(@PathVariable("id") long id, @RequestBody FuncionarioRequest funcionarioRequest) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.update(id, funcionarioRequest));
 
     }
 
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         funcionarioService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/filter/departamento/{departamentoId}")
-    public List<FuncionarioResponse> filterByDepartamento(@PathVariable Long departamentoId) {
-        return   funcionarioService.findByDepartamento(departamentoId);
+    public ResponseEntity<List<FuncionarioResponse>> filterByDepartamento(@PathVariable Long departamentoId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.findByDepartamento(departamentoId));
     }
 
     @GetMapping("/filter/nome/{nome}")
-    public List<FuncionarioResponse> filterByNome(@PathVariable String nome) {
-        return   funcionarioService.findbyNome(nome);
+    public ResponseEntity<List<FuncionarioResponse>> filterByNome(@PathVariable String nome) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.findbyNome(nome));
     }
 
     @GetMapping("/filter")
-    public List<FuncionarioResponse> filterByIdAndNome(@RequestParam long id, @RequestParam String nome) {
-        return   funcionarioService.findByIdAndNome(id, nome);
+    public ResponseEntity<List<FuncionarioResponse>> filterByIdAndNome(@RequestParam long id, @RequestParam String nome) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(funcionarioService.findByIdAndNome(id, nome));
     }
 
 }

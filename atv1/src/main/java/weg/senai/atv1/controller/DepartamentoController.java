@@ -1,6 +1,8 @@
 package weg.senai.atv1.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import weg.senai.atv1.dto.departamento.DepartamentoRequest;
 import weg.senai.atv1.dto.departamento.DepartamentoResponse;
@@ -18,34 +20,39 @@ public class DepartamentoController {
 
 
     @PostMapping("/register")
-    public DepartamentoResponse create(@RequestBody DepartamentoRequest departamentoRequest) {
-        return departamentoService.create(departamentoRequest);
+    public ResponseEntity<DepartamentoResponse> create(@RequestBody DepartamentoRequest departamentoRequest) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(departamentoService.create(departamentoRequest));
 
     }
 
     @GetMapping("/list")
-    public List<DepartamentoResponse> listAll() {
-        return departamentoService.listAll();
+    public ResponseEntity<List<DepartamentoResponse>> listAll() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(departamentoService.listAll());
 
     }
 
 
     @GetMapping("/list/{id}")
-    public DepartamentoResponse listId(@PathVariable("id") Long id) {
-        return departamentoService.findById(id);
+    public ResponseEntity<DepartamentoResponse> listId(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(departamentoService.findById(id));
 
     }
 
     @PutMapping("/update/{id}")
-    public DepartamentoResponse update(@PathVariable("id") long id, @RequestBody DepartamentoRequest departamentoRequest) {
-        return departamentoService.update(id, departamentoRequest);
+    public ResponseEntity<DepartamentoResponse> update(@PathVariable("id") long id, @RequestBody DepartamentoRequest departamentoRequest) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(departamentoService.update(id, departamentoRequest));
 
     }
 
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         departamentoService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
